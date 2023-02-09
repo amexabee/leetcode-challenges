@@ -1,1 +1,1 @@
-### Challenges and solution from leet code
+### Challenges and solutions from leet code
