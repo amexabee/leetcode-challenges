@@ -13,5 +13,19 @@ Explanation: The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
 */
 
 var threeSumClosest = function(nums, target) {
-    
+  nums.sort((a, b) => a - b);
+  let min = nums[0] + nums[1] + nums[2]
+
+  for (let a = 0; a < nums.length; a++) {
+    for (let b = a + 1; b < nums.length; b++) {
+      for (let c = b + 1; c < nums.length; c++) {
+        const sum = nums[a] + nums[b] + nums[c]
+        if (Math.abs(min - target) > Math.abs(sum - target)) min = sum
+      }
+  
+    }
+  
+  }
+  
+  return min;
 };
