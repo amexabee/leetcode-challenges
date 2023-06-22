@@ -39,5 +39,41 @@ s consists of English letters (lower-case and upper-case), ',' and '.'.
 */
 
 var convert = function(s, numRows) {
+  const arr = []
+  let row = 1;
+  let count = 0;
+
+  while (count < s.length) {
+    if (count === 0) {
+      for (let i=0; i < numRows; i++) {
+        let a = [s[count++]]
+        arr.push(a)
+      }
+      row = numRows;
+    }
     
+    if (row === 1) {
+      for (let i=0; i < numRows; i++) {
+        if (s[count]) {
+          let a = s[count++]
+          arr[i].push(a)
+        }
+      }
+      row = numRows;
+    }
+
+    if (row === numRows) {
+      for (let i = row - 2; i > 0; i--) {
+        if (s[count]) {
+          let a = s[count++]
+          arr[i].push(a)
+        }
+      }
+      row = 1;
+    }
+  }
+  
+
+  return arr.flat().join('');
+ 
 };
