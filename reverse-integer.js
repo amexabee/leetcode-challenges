@@ -22,5 +22,7 @@ Constraints:
 */
 
 var reverse = function(x) {
-    
+    const arr = Array.from(Math.abs(x).toString())
+    const result = parseInt(arr.reverse().join(''))
+    return result >= Math.pow(-2, 31) && result <= Math.pow(2, 31) - 1 ? x > 0 ? result : -result : 0;
 };
