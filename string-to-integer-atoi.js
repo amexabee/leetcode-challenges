@@ -61,5 +61,7 @@ s consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+
 */
 
 var myAtoi = function(s) {
-
+    let int = parseInt(s)
+    if (!int) return 0;
+    return int < Math.pow(-2, 31) ? Math.pow(-2, 31) : int > Math.pow(2, 31) - 1 ? Math.pow(2, 31) - 1 : int;
 };
