@@ -41,5 +41,32 @@ Constraints:
 */
 
 var intToRoman = function(num) {
-    
+  const convert = {ones:['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'], tens: ['', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC'], hundreds: ['', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM'], thousands: ['', 'M', 'MM', 'MMM']}
+  
+  let output = '';
+  let digit;
+
+  if (num > 999) {
+    digit = Math.floor(num/1000);
+    output += convert.thousands[digit];
+    num -= digit * 1000;
+  }
+
+  if (num > 99) {
+    digit = Math.floor(num/100);
+    output += convert.hundreds[digit];
+    num -= digit * 100;
+  }
+
+  if (num > 9) {
+    digit = Math.floor(num/10);
+    output += convert.tens[digit];
+    num -= digit * 10;
+  }
+
+  if (num > 0) {
+    output += convert.ones[num];
+  }
+  
+  return output;
 };
