@@ -24,5 +24,34 @@ digits[i] is a digit in the range ['2', '9'].
 */
 
 var letterCombinations = function(digits) {
+  const convert = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i'], ['j', 'k', 'l'], ['m', 'n', 'o'], ['p', 'q', 'r', 's'], ['t', 'u', 'v'], ['w', 'x', 'y', 'z']];
+  
+  let output = [];
+  let arr = [];
+
+  help(digits, 0);
+
+  function help(digits, index) {
+    if (!digits[index]) return;
     
-};
+    let letters = convert[parseInt(digits[index]) - 2]
+    
+    if (!output.length) output = letters;
+
+    else {
+      for (let i = 0; i < output.length; i++) {
+        letters.forEach(letter => {
+          let str = output[i]
+          str += letter;
+          arr.push(str);
+        })
+      }
+      output = arr;
+      arr = [];
+    }
+
+    help(digits, ++index);
+  }
+  
+  return output;
+}
