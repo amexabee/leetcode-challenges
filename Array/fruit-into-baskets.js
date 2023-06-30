@@ -11,48 +11,51 @@ from every tree (including the start tree) while moving to the right. The picked
 in one of your baskets. Once you reach a tree with fruit that cannot fit in your baskets, you must stop.
 Given the integer array fruits, return the maximum number of fruits you can pick.
 
+Example 1:
+Input: fruits = [1,2,1]
+Output: 3
+Explanation: We can pick from all 3 trees.
+
+Example 2:
+Input: fruits = [0,1,2,2]
+Output: 3
+Explanation: We can pick from trees [1,2,2].
+If we had started at the first tree, we would only pick from trees [0,1].
+
+Example 3:
+Input: fruits = [1,2,3,2,2]
+Output: 4
+Explanation: We can pick from trees [2,3,2,2].
+If we had started at the first tree, we would only pick from trees [1,2].
+
+Constraints
+1 <= fruits.length <= 10^5
+0 <= fruits[i] < fruits.length
 */
 
-// My Solution
-function totalFruit(fruits) {
-  let freq = 0;
+var totalFruit = function(fruits) {
+  let result = 0;
 
-  fruits.forEach((item, index) => {
-    const before = beforeFreq(fruits, index);
-    const after = afterFreq(fruits, index);
-
-    if (before === undefined && after === undefined)
-      freq = Math.max(calculate(fruits, index, item), freq);
-    else if (before === undefined)
-      freq = Math.max(calculate(fruits, index, after), freq);
-    else if (after === undefined)
-      freq = Math.max(calculate(fruits, index - 1, item), freq);
-    else
-      freq = Math.max(
-        calculate(fruits, index - 1, item),
-        calculate(fruits, index, after),
-        freq
-      );
-  });
-  return freq;
-}
-
-function calculate(array, index, other) {
-  item = array[index];
-  let count = 0;
-  for (let i = index; i < array.length; i++) {
-    count++;
-    if (array[i + 1] !== item && array[i + 1] !== other) return count;
+  let n = 0;
+  while (fruits[n] === fruits[n+1]) {
+    n++;
   }
-}
-
-function beforeFreq(array, index) {
-  return array[index - 1];
-}
-
-function afterFreq(array, index) {
-  let item = array[index];
-  for (let i = index; i < array.length; i++) {
-    if (array[i + 1] !== item) return array[i + 1];
+  
+  for (let i = n; i < fruits.length; i++) {
+    let count = i === n ? n : 0;
+    let start = i;
+    let arr = [];
+    
+    while (arr.length <= 2 && start < fruits.length) {
+      if (!arr.includes(fruits[start])) {
+        arr.push(fruits[start]); 
+        if (arr.length <= 2) count++;
+      }
+      else count++;
+      start++;
+    }
+    if (count >= fruits.length) return count; 
+    result = count > result ? count : result;
   }
-}
+  return result;
+};
