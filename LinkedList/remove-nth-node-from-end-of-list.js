@@ -23,5 +23,20 @@ The number of nodes in the list is sz.
 */
 
 var removeNthFromEnd = function(head, n) {
-    
+  let p1 = p2 = p3 = head;
+  let i = 1;
+
+  while (p3.next != null) {
+    if (p2 !== head) p1 = p1.next;
+    if (i >= n) p2 = p2.next;
+    p3 = p3.next;
+    i++;
+  }
+
+  if (p1 === p2) {
+    if (p2 === p3) return null;
+    head = p1.next;
+  } else p1.next = p2.next;
+  
+  return head;
 };
