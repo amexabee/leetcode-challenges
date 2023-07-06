@@ -16,5 +16,13 @@ Constraints:
 */
 
 var generateParenthesis = function(n) {
-  
+  if (n === 1) return ['()'];
+
+  n = n - 1
+  let output = generateParenthesis(n);
+  let arr1 = output.map(o => '(' + o + ')')
+  arr1 = [...arr1, ...output.map(o => '()' + o )]
+  arr1 = [...arr1, ...output.map(o =>  {if (!arr1.includes(o + '()')) return o + '()'}).filter(Boolean)]
+
+  return arr1
 };
