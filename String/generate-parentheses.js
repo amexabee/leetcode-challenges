@@ -16,13 +16,19 @@ Constraints:
 */
 
 var generateParenthesis = function(n) {
-  if (n === 1) return ['()'];
+    const result = [];
+    recursive('', 0, 0);
 
-  n = n - 1
-  let output = generateParenthesis(n);
-  let arr1 = output.map(o => '(' + o + ')')
-  arr1 = [...arr1, ...output.map(o => '()' + o )]
-  arr1 = [...arr1, ...output.map(o =>  {if (!arr1.includes(o + '()')) return o + '()'}).filter(Boolean)]
+    function recursive(current, open, close) {
+        if (current.length === 2 * n) {
+            result.push(current);
+            return;
+        }
 
-  return arr1
+        if (open < n) recursive(current + '(', open + 1, close);
+        
+        if (close < open) recursive(current + ')', open, close + 1);
+    }
+  
+    return result;
 };
