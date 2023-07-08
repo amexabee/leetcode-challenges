@@ -22,5 +22,26 @@ The number of nodes in the list is in the range [0, 100].
 */
 
 var swapPairs = function(head) {
+  let prev = null;
+  let current = head;
+  while (current !== null && current.next !== null) {
+    current = swap(prev, current);
     
-};
+    if (!prev) head = current;
+    
+    prev = current.next;
+    current = prev.next
+  }
+  
+  function swap(prev, current) {
+    
+    let next = current.next;
+    
+    if (prev) prev.next = next;
+    current.next = next.next
+    next.next = current;
+    return next;
+  }
+  
+  return head;
+}
