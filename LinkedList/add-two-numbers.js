@@ -26,5 +26,26 @@ It is guaranteed that the list represents a number that does not have leading ze
 */
 
 var addTwoNumbers = function(l1, l2) {
-    
+    let head = l1;
+    let carry = 0; 
+    while (true) {
+      let sum = l1.val + l2.val + carry;
+      if (sum >= 10) {
+        l1.val = sum - 10;
+        carry = 1;
+      } else {
+        l1.val = sum;
+        carry = 0;
+      }
+
+    if (l1.next === l2.next) {
+      if (carry) l1.next = new ListNode(carry);
+      break;
+    }
+      
+      l1 = l1.next = l1.next || new ListNode(0);
+      l2 = l2.next || new ListNode(0);
+    }
+  
+    return head;
 };
