@@ -31,5 +31,26 @@ Constraints:
 */
 
 var nextPermutation = function(nums) {
+  let last = nums.length - 1;
+  let pointer = last - 1;
+  while (pointer >= 0) {
+    if (nums[last] > nums[pointer]) {
+      swap(pointer, last);
+      nums.splice(pointer + 1, nums.length, ...nums.slice(pointer + 1).sort((a, b) => a - b));
+      return;
+    }
 
+    if (last - 1 === pointer) {
+      last = nums.length - 1;
+      pointer--;
+    } else last--;
+  }
+
+  function swap(pointer) {
+    var temp = nums[pointer];
+    nums[pointer] = nums[last];
+    nums[last] = temp;
+  }
+ 
+  nums.sort((a, b) => a - b);
 }
