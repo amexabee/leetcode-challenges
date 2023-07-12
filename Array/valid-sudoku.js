@@ -44,5 +44,43 @@ board[i][j] is a digit 1-9 or '.'.
 */
 
 var isValidSudoku = function(board) {
+  for (let i = 0; i < 9; i++) {
+    let row = [];
+    let column = [];
+    for (let j = 0; j < 9; j++) {
+      if (board[i][j] !== '.') row.push(board[i][j])
+      if (board[j][i] !== '.') column.push(board[j][i])
 
+      if (i % 3 === 0 && j % 3 === 0) {
+        let subBox = [];
+        for (let index = i; index - i < 3; index++) 
+          for (let jndex = j; jndex - j < 3; jndex++)
+            if (board[index][jndex] !== '.') subBox.push(board[index][jndex]);
+        if (!isValid(subBox)) return false;
+      }
+
+    }
+    if (!isValid(row, column)) return false;
+  }
+  
+  function isValid(row, column){
+    let arr1 = [];
+    let arr2 = [];
+    let length = column ? row.length > column.length ? row.length : column.length : row.length; 
+
+    for (let index = 0; index < length; index++) {
+      if (row[index]) {
+        if (arr1.includes(row[index])) return false;
+        arr1.push(row[index]);
+      } 
+      if (column && column[index]) {
+        if (arr2.includes(column[index])) return false;
+        arr2.push(column[index]);
+      }
+    }
+
+    return true;
+  }
+
+  return true;
 }
