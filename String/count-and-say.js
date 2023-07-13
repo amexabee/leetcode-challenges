@@ -33,5 +33,26 @@ Constraints:
 */
 
 var countAndSay = function(n) {
+  if (n === 1) return '1';
 
-}
+  function interpret(str) {
+    let count = 0;
+    let pointer = 0;
+    let num = str[0];
+    let result = '';
+  
+    while (str[pointer]) {
+      while (str[pointer] === num) {
+        count++;
+        pointer++;
+      } 
+      result += count + num
+      num = str[pointer]
+      count = 0;
+    }
+  
+    return result;
+  }
+  
+  return interpret(countAndSay(n-1));
+};
