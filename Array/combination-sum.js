@@ -34,5 +34,24 @@ All elements of candidates are distinct.
 */
 
 var combinationSum = function(candidates, target) {
-
+  candidates.sort((a,b) => a - b);
+  const result = [];
+  recursive([], 0);
+  
+  function recursive(nums, start) {
+    let sum = nums.reduce((a, b) => a + b, 0);
+    if (sum === target) {
+      result.push([...nums])
+      return;
+    }
+    else if (sum < target){
+      for (let i = start; i < candidates.length; i++) {
+        nums.push(candidates[i])
+        recursive(nums, i);
+        nums.pop();
+      }
+    }
+  }
+  
+  return result;
 }
