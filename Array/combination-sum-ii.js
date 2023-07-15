@@ -31,5 +31,26 @@ Constraints:
 */
 
 var combinationSum2 = function(candidates, target) {
-
+  candidates.sort((a, b) => a - b);
+  let result = [];
+  recursive([], 0)
+  
+  function recursive(nums, pointer) {
+    let sum = nums.reduce((a, b) => a + b, 0);
+    if (sum === target) {
+      result.push([...nums]);
+      return;
+    }
+  
+    if (sum < target) {
+      for (let i = pointer; i < candidates.length; i++) {
+        nums.push(candidates[i]);
+        recursive(nums, i + 1);
+        while (candidates[i] && candidates[i] === candidates[i + 1]) i++;
+        nums.pop();
+      }
+    }
+  }
+  
+  return result;
 };
