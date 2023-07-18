@@ -20,5 +20,19 @@ Constraints:
 */
 
 var permuteUnique = function(nums) {
-
+    if (nums.length <= 1) return [nums] 
+    
+    let result = []
+    let store = [];
+    for (let i = 0; i < nums.length; i++) {
+      if (store.includes(nums[i])) continue;
+      store.push(nums[i]);
+      let current = nums[i];
+      let subArr = nums.filter((item, index) => index !== i);
+      let output = permuteUnique(subArr);
+      output.forEach(o => o.unshift(current));
+      result.push(...output); 
+    }
+    store = [];
+    return result;
 }
