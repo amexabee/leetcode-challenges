@@ -22,5 +22,17 @@ All the integers of nums are unique.
 */
 
 var permute = function(nums) {
-    
+    if (nums.length <= 1) return [nums];
+
+    let result = [];
+
+    for (let i = 0; i < nums.length; i++) {
+        let current = nums[i];
+        let subArr = nums.filter(item => item !== current);
+        let output = permute(subArr);
+        output.forEach(item => item.unshift(current));
+        result.push(...output);
+    } 
+
+    return result;
 };
