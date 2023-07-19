@@ -27,34 +27,30 @@ var rotate = function(matrix, count = 1) {
   if (start >= end) return;
   
   for (let index = start; index < end; index++) {
-    loop(matrix[start][index], start, index);
+    convert(matrix[start][index], start, index)
   }
   
-  function loop(val, i , j) {
-    if (i === start && j !== end) {
-      let next = matrix[j][end];
-      matrix[j][end] = val;
-      loop(next, j, end);
-    }
+  function convert(val, i , j) {
+    let next = matrix[j][end];
+    matrix[j][end] = val;
+    val = next;
+    i = j;
+    j = end;
     
-    if (i !== end && j === end) {
-      let next = matrix[end][end - i + start];
-      matrix[end][end - i + start] = val;
-      loop(next, end, end - i + start);
-    }
+    next = matrix[end][end - i + start];
+    matrix[end][end - i + start] = val;
+    val = next;
+    j = end - i + start;
+    i = end;
   
-    if (i === end && j !== start) {
-      let next = matrix[j][start];
-      matrix[j][start] = val;
-      loop(next, j, start);
-    }
-  
-    if (i !== start && j === start) {
-      matrix[start][end - i + start] = val;
-      return;
-    }
+    next = matrix[j][start];
+    matrix[j][start] = val;
+    val = next;
+    i = j;
+    j = start;
+
+    matrix[start][end - i + start] = val;
   }
 
-  rotate(matrix, count + 1);
-  
+  rotate(matrix, count + 1) 
 }
