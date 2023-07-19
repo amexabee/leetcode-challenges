@@ -20,6 +20,41 @@ n == matrix.length == matrix[i].length
 -1000 <= matrix[i][j] <= 1000
 */
 
-var rotate = function(matrix) {
+var rotate = function(matrix, count = 1) {
+  let start = count - 1;
+  let end = matrix.length - count;
+  
+  if (start >= end) return;
+  
+  for (let index = start; index < end; index++) {
+    loop(matrix[start][index], start, index);
+  }
+  
+  function loop(val, i , j) {
+    if (i === start && j !== end) {
+      let next = matrix[j][end];
+      matrix[j][end] = val;
+      loop(next, j, end);
+    }
     
-};
+    if (i !== end && j === end) {
+      let next = matrix[end][end - i + start];
+      matrix[end][end - i + start] = val;
+      loop(next, end, end - i + start);
+    }
+  
+    if (i === end && j !== start) {
+      let next = matrix[j][start];
+      matrix[j][start] = val;
+      loop(next, j, start);
+    }
+  
+    if (i !== start && j === start) {
+      matrix[start][end - i + start] = val;
+      return;
+    }
+  }
+
+  rotate(matrix, count + 1);
+  
+}
