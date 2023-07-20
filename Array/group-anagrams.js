@@ -25,5 +25,17 @@ strs[i] consists of lowercase English letters.
 */
 
 var groupAnagrams = function(strs) {
-    
+  const order = str => str.split('').sort().join('');
+  let result = [];
+  let match = {};
+
+  for (let i = 0; i < strs.length; i++) {
+    let key = order(strs[i]);
+    if(match[key]) match[key].push(strs[i]);
+    else match[key] = [strs[i]];
+  }
+
+  for (const key in match) result.push(match[key]);
+  
+  return result;
 };
