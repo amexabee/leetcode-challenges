@@ -25,5 +25,16 @@ Either x is not zero or n > 0.
 */
 
 var myPow = function(x, n) {
+    let positive = n > 0;
+    let result = 1;
+    n = Math.abs(n);
 
+    while (n > 0) {
+        if (n % 2 === 1) result *= x;
+
+        x *= x;
+        n = Math.floor(n / 2);
+    }
+
+    return positive ? result : 1 / result;
 }
