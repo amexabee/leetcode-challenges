@@ -19,5 +19,51 @@ n == matrix[i].length
 */
 
 var spiralOrder = function(matrix) {
+  let output = []
+  output.push(matrix[0][0])
+  let i = j = 0;
+  let depth = matrix.length - 1;
+  let width = matrix[0].length - 1;
 
-}
+  while (output.length < matrix[0].length * matrix.length) {
+
+    let count = 0;
+    while (count < width) {
+      output.push(matrix[i][++j])
+      count++;
+    }
+
+    if (output.length === matrix[0].length * matrix.length) break;
+
+    if (depth !== matrix.length - 1) {
+      width--;
+      depth--;
+    }
+
+    count = 0;
+    while (count < depth) {
+      output.push(matrix[++i][j])
+      count++;
+    }
+
+    if (output.length === matrix[0].length * matrix.length) break;
+    
+    count = 0;
+    while (count < width) {
+      output.push(matrix[i][--j])
+      count++;
+    }
+
+    if (output.length === matrix[0].length * matrix.length) break;
+    
+    width--;
+    depth--;
+    count = 0;
+    while (count < depth) {
+      output.push(matrix[--i][j])
+      count++;
+    }  
+  }
+
+  return output;
+};
