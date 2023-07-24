@@ -24,5 +24,13 @@ Constraints:
 */
 
 var maxSubArray = function(nums) {
+  let prevSum = result = nums[0];
 
+  for (let i = 1; i < nums.length; i++) {
+    prevSum = Math.max(nums[i], prevSum + nums[i]);
+    result = Math.max(prevSum, result);
+  }
+
+  return result;
 }
+
