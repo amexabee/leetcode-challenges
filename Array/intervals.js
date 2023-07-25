@@ -21,5 +21,26 @@ intervals[i].length == 2
 */
 
 var merge = function(intervals) {
-
-}
+  for (let c = 1; c < intervals.length; c++) {
+    let p = c - 1;
+    while (p >= 0) {
+      if (intervals[c][0] >= intervals[p][0] && intervals[c][0] <= intervals[p][1]) { 
+        if (intervals[p][1] > intervals[c][1]) {
+          intervals[c][1] = intervals[p][1];
+        }
+        intervals[c][0] = intervals[p][0]
+        intervals.splice(p, 1);
+        c--;
+      }
+      else if (intervals[c][0] < intervals[p][0] && intervals[c][1] >= intervals[p][0]) {
+        if (intervals[p][1] > intervals[c][1]) {
+          intervals[c][1] = intervals[p][1];
+        }
+        intervals.splice(p, 1);
+        c--;
+      }
+      p--;
+    }
+  }
+  return intervals;
+};
