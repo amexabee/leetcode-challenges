@@ -1,5 +1,5 @@
 /*
-Chaleenge description: https://leetcode.com/problems/jump-game
+Challenge description: https://leetcode.com/problems/jump-game
 
 You are given an integer array nums. You are initially positioned at the array's first index, 
 and each element in the array represents your maximum jump length at that position.
@@ -22,5 +22,26 @@ Constraints:
 */
 
 var canJump = function(nums) {
-
-}
+  let index = 0;
+  while (index < nums.length - 1) {
+    let increment = compare(index, nums[index]);
+    index += increment; 
+    
+    if (index < nums.length - 1 && nums[index] === 0) return false;
+  }
+  
+  function compare(i, n) {
+    let max = 0;
+    let increment = 0;
+    while (n > 0) {
+      if (n + nums[i+n] > max) {
+        increment = n;
+        max = n + nums[i+n]
+      }
+      n--;
+    }
+    return increment;
+  }
+  
+  return true;
+};
