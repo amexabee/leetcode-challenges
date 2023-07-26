@@ -16,5 +16,50 @@ Constraints:
 */
 
 var generateMatrix = function(n) {
-  
-}
+  let num = 1;
+  let matrix = Array.from({ length: n }, () => Array(n).fill(0));
+  matrix[0][0] = num++;
+  let i = j = 0;
+  let depth = width = n - 1;
+
+  while (num <= Math.pow(n, 2)) {
+    let count = 0;
+    while (count < width) {
+      matrix[i][++j] = num++;
+      count++;
+    }
+
+    if (num > Math.pow(n, 2)) break;
+
+    if (depth !== matrix.length - 1) {
+      width--;
+      depth--;
+    }
+
+    count = 0;
+    while (count < depth) {
+      matrix[++i][j] = num++
+      count++;
+    }
+
+    if (num > Math.pow(n, 2)) break;
+    
+    count = 0;
+    while (count < width) {
+      matrix[i][--j] = num++;
+      count++;
+    }
+
+    if (num > Math.pow(n, 2)) break;
+    
+    width--;
+    depth--;
+    count = 0;
+    while (count < depth) {
+      matrix[--i][j] = num++;
+      count++;
+    }  
+  }
+
+  return matrix;
+};
