@@ -18,5 +18,31 @@ The number of nodes in the list is in the range [0, 500].
 */
 
 var rotateRight = function(head, k) {
+  let length = 0;
+  for (let index = 0; index < k; index++) {
+    let beforeTail = findBeforeTail(head);
+    
+    if (k > length) k = (k % length) ? k % length : length;
+
+    if (beforeTail) {
+      let tail = beforeTail.next;
+      beforeTail.next = null;
+      tail.next = head;
+      head = tail;
+    }
+  }
+
+  function findBeforeTail(head) {
+    if (!head || !head.next) return null;
+    let current = head;
+    length = 2;
+    while(current.next.next) {
+      current = current.next;
+      length++;
+    }
   
+    return current;
+  }
+  
+  return head
 }
