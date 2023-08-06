@@ -32,5 +32,16 @@ obstacleGrid[i][j] is 0 or 1.
 */
 
 var uniquePathsWithObstacles = function(obstacleGrid) {
+  function grid(m, n, memo = {}) {
+    if (m === obstacleGrid.length || n === obstacleGrid[0].length) return 0;
+    if (obstacleGrid[m][n] === 1) return 0;
+    let key = m + ',' + n
+    if (key in memo) return memo[key];
+    if (m === obstacleGrid.length - 1 && n === obstacleGrid[0].length - 1) return 1;
+  
+    memo[key] = grid(m + 1, n, memo) + grid(m, n + 1, memo)
+    return memo[key]
+  }
 
+  return grid(0, 0);
 }
