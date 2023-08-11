@@ -22,5 +22,21 @@ n == grid[i].length
 */
 
 var minPathSum = function(grid) {
+  const recursive = (x, y, memo) => {
+    if ( x === grid.length || y === grid[0].length) return Number.MAX_SAFE_INTEGER;
+
+    let key = x + ',' + y;
+
+    if (key in memo) return memo[key];
     
-};
+    if ( x === grid.length - 1 && y === grid[0].length - 1) return grid[x][y];
+
+    let min = grid[x][y] + Math.min(recursive(x + 1, y, memo), recursive(x, y + 1, memo));
+
+    memo[key] = min;
+
+    return min;
+  }
+  
+  return recursive(0, 0, {})
+}
