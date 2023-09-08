@@ -40,5 +40,65 @@ path is a valid absolute Unix path.
 */
 
 var simplifyPath = function(path) {
-    
-};
+  const arr = Array.from(path)
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === '/') repeated (i);
+  }
+  
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === '.' && (!arr[i - 1] || arr[i - 1] === '/') && (!arr[i + 1] || arr[i + 1] === '/')) { 
+      i = current(i);
+    }
+    if (arr[i] === '.' && arr[i + 1] === '.' && (!arr[i - 1] || arr[i - 1] === '/') && (!arr[i + 2] || arr[i + 2] === '/')) {
+      i = back(i)
+    };
+  }
+
+  function repeated(i) {
+    let count = 0
+    let j = i + 1
+    while (arr[j] === '/') {
+      j++;
+      count++;
+    }
+    arr.splice(i, count)  
+  }
+
+  function current(i) {
+    if (arr[i + 1]) {
+      arr.splice(i, 2)
+      i -= 2;
+    }
+    else {
+      arr.splice(i, 1)
+      i--;
+    }
+    return i;
+  }
+
+  function back(i) {
+    if (arr[i - 2]) {
+      let j = i - 2; 
+      let count = 0;
+      while (arr[j] !== '/') {
+        j--;
+        count++;
+      }
+      arr.splice(j, count + 4);
+      return j;
+    }
+    else if (arr[i - 1]) {
+      arr.splice(i, 3);
+      return i - 3;
+    }
+    else {
+      arr.splice(i, 2);
+      return i - 2;
+    }
+  }
+
+  if (arr.length > 1 && arr[arr.length - 1] === '/') arr.pop();
+  
+  return arr.join('') ? arr.join('') : '/';
+}
