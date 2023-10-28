@@ -31,5 +31,34 @@ word1 and word2 consist of lowercase English letters.
 */
 
 var minDistance = function(word1, word2) {
-    
-};
+  
+  const twoDArray = new Array(word1.length + 1);
+
+  for (let i = 0; i <= word1.length; i++) {
+    twoDArray[i] = new Array(word2.length + 1);
+  }
+
+  for (let i = 0; i <= word1.length; i++) {
+    for (let j = 0; j <= word2.length; j++) {
+      twoDArray[i][j] = Number.MAX_VALUE;
+    }
+  }
+
+  for (let i = 0; i <= word1.length; i++) {
+    twoDArray[i][word2.length] = word1.length - i;
+  }
+  
+  for (let i = 0; i <= word2.length; i++) {
+    twoDArray[word1.length][i] = word2.length - i;
+  }
+
+  
+  for (let i = word2.length - 1; i >= 0; i--) {
+    for (let j = word1.length - 1; j >= 0; j--) {
+      if (word1[j] === word2[i]) twoDArray[j][i] = twoDArray[j+1][i+1];
+      else twoDArray[j][i] = 1 + Math.min(twoDArray[j+1][i], twoDArray[j][i+1], twoDArray[j+1][i+1]);
+    }
+  }
+
+  return twoDArray[0][0]
+}
