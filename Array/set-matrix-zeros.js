@@ -25,5 +25,23 @@ Could you devise a constant space solution?
 */
 
 var setZeroes = function(matrix) {
-    
+ const values = [];
+ for (let i = 0; i < matrix?.length; i++) {
+  for (let j = 0; j < matrix[i]?.length; j++) {
+    if (matrix[i][j] == 0) {
+      values.push({i: i, j: j});
+    }
+  }
+ }
+
+ values.forEach(v => {
+  
+  for (let c = 0; c < matrix?.length; c++) {
+   matrix[c][v.j] = 0;
+  }
+  
+  for (let c = 0; c < matrix[0]?.length; c++) {
+   matrix[v.i][c] = 0;  
+  }
+ })
 };
