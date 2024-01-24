@@ -25,15 +25,15 @@ n == matrix[i].length
 */
 
 var searchMatrix = function(matrix, target) {
-      if (matrix.length === 1) {
-    const searchArr = (arr) => {
-      if (arr.length === 1) {
-        return arr[0] === target;
-      }
-      let mid = parseInt(arr.length / 2);
+  if (matrix.length === 1) {
+  const searchArr = (arr) => {
+  if (arr.length === 1) {
+    return arr[0] === target;
+  }
+  let mid = parseInt(arr.length / 2);
 
-      if (arr[mid] > target) return searchArr(arr.slice(0, mid)) 
-      if (arr[mid] < target) return searchArr(arr.slice(mid, arr.length))
+  if (arr[mid] > target) return searchArr(arr.slice(0, mid)) 
+    if (arr[mid] < target) return searchArr(arr.slice(mid, arr.length))
       return searchArr(arr.slice(mid, mid + 1))
     }
     return searchArr(matrix[0]);
