@@ -21,5 +21,27 @@ Constraints:
 */
 
 var combine = function(n, k) {
- 
+  if (k === 1) {
+  let output = [];
+  for (let i = 1; i <= n; i++) {
+      let arr = [];
+      arr.push(i);
+      output.push(arr);
+    }
+    return output;
+  }
+
+  let output = combine(n, k - 1);
+  let arr = []
+  for (let j = 0; j < output.length; j++) {
+    let ar = output[j] 
+    for (let i = 1 + ar[k - 2]; i <= n; i++) {
+      ar.push(i)
+      arr.push([...ar])
+      ar.pop()
+    }
+  }
+  output = arr;
+
+  return output;  
 };
