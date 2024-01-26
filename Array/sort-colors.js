@@ -23,5 +23,5 @@ Follow up: Could you come up with a one-pass algorithm using only constant extra
 */
 
 var sortColors = function(nums) {
-    
+    return nums.sort();
 };
