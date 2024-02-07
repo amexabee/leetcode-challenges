@@ -18,6 +18,38 @@ All the numbers of nums are unique.
 */
 
 var subsets = function(nums) {
-    
+  const combine = (nums, k) => {
+
+  if (k === 1) {
+    let output = [];
+    for (let i = 0; i < nums.length; i++) {
+      let arr = [];
+      arr.push(nums[i]);
+      output.push(arr);
+    }
+    return output;
+  }
+
+  let output = combine(nums, k - 1);
+  let arr = []
+  for (let j = 0; j < output.length; j++) {
+    let ar = output[j]
+    for (let i = nums.indexOf(ar[k-2]) + 1; i < nums.length; i++) {
+      ar.push(nums[i])
+      arr.push([...ar])
+      ar.pop()
+    }
+  }
+  output = arr;
+
+  return output;
 };
+  const output = [[]];
+  for (let i = 1; i <= nums.length; i++) {
+      let res = combine(nums, i);
+      output.push(...res);
+  }
+  
+  return output;                       
+}
 
