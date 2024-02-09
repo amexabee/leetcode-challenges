@@ -33,5 +33,5 @@ const merge = arr => {
     }
   }
   
-  return sorted
+  return sorted;
 }
