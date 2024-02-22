@@ -26,6 +26,44 @@ board and word consists of only lowercase and uppercase English letters.
 Follow up: Could you use search pruning to make your solution faster with a larger board?
 */
 
-var exist = function(board, word) {
+var exist = function(board, word) { 
+  let output = false;
+
+  const search = (i, j, k = 0, prev = '', visited = {})  => {
+    let key = i + ',' + j;
+    if (key in visited) return; 
     
-};
+    if (k === word.length - 1) {
+      if (word[k] === board[i][j]) output = true;
+      return;
+    }
+    
+    visited[key] = true;
+  
+    if (prev !== 'l' && j + 1 < board[0].length && board[i][j + 1] === word[k + 1]) {
+      search(i, j + 1, k + 1, 'r', visited);
+    }
+    
+    if (prev !== 'u' && i + 1 < board.length && board[i + 1][j] === word[k + 1]) {
+      search(i + 1, j, k + 1, 'd', visited);
+    }
+    
+    if (prev !== 'r' && j > 0 && board[i][j - 1] === word[k + 1]) {
+      search(i, j - 1, k + 1, 'l', visited);
+    }
+  
+    if (prev !== 'd' && i > 0 && board[i - 1][j] === word[k + 1]) {
+      search(i - 1, j, k + 1, 'u', visited);
+    }
+  
+    delete visited[key];
+    return;
+  }
+
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[0].length; j++) {
+      if (board[i][j] === word[0]) search(i, j);    
+    }
+  }
+  return output; 
+}
