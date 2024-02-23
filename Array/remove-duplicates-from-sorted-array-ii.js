@@ -47,5 +47,23 @@ nums is sorted in non-decreasing order.
 */
 
 var removeDuplicates = function(nums) {
-    
+  const MAX = 10001;
+  let p1 = 0;
+  const duplicate = (a, b, c) => nums[a] === nums[b] && nums[a] === nums[c]; 
+
+  while (p1 < nums.length) {
+    let p2 = p1 + 2;
+    if (!duplicate(p1, p1 + 1, p2)) p1++;
+    else {
+      while (duplicate(p1, p1 + 1, p2)) {
+        nums[p2] = MAX;
+        p2++;
+      }
+      p1 = p2;
+      p2 = p1 + 2;
+    }
+  }
+
+  nums.sort((a, b) => a - b)
+  return nums.filter(a => a < 10001).length;
 };
