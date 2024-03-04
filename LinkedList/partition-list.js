@@ -21,5 +21,38 @@ The number of nodes in the list is in the range [0, 200].
 */
 
 var partition = function(head, x) {
-    
+  let first = null;
+  let current = head;
+  
+  while (current) {
+    if (current.val >= x)
+      arrange(first, current)
+
+    first = current;
+    current = current.next;
+  }
+
+  function arrange(first, current) {
+    let before = current;
+    let last = current.next;
+    while (last) {
+      if (last.val < x) 
+        first = swap(first, current, before, last);
+      else 
+        before = before.next;
+      
+      if (before?.next >= x) 
+        before = before.next;
+      last = before ? before.next : null;
+    }
+  }
+
+  function swap(first, current, before, last) {
+    first ? first.next = last : head = last;
+    before.next = last.next;
+    last.next = current;
+    return last;
+  }
+
+  return head;
 };
