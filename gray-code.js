@@ -33,5 +33,42 @@ Constraints:
 */
 
 var grayCode = function(n) {
-    
+    let output = [];
+    const decToBin = num => {
+        let result = '';
+        while (num > 0) {
+            result = num % 2 + result;
+            num = Math.floor(num / 2);
+        }
+
+        return result || '0';
+    };
+
+    const binToGra = str => {
+        let result = '';
+        for (let i = 1; i < str.length; i++) {
+            result += (str[i - 1] === str[i]) ? '0' : '1';
+        }
+
+        return str[0] + result;
+    };
+
+    const binToDec = str => {
+        let result = 0;
+        for (let i = 0; i < str.length; i++) {
+            let mult = Math.pow(2, i)
+            result += str[str.length - i - 1] * mult;
+        }
+
+        return result;
+    };
+
+    for (let i = 0, lim = Math.pow(2, n); i < lim; i++) {
+        let bin = decToBin(i);
+        let gra = binToGra(bin);
+        let dec = binToDec(gra);
+        output.push(dec);
+    }
+
+    return output;
 };
