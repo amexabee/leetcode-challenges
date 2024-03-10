@@ -19,5 +19,56 @@ Constraints:
 */
 
 var subsetsWithDup = function(nums) {
+  nums.sort((a,b) => a - b);
+  const combine = (nums, k) => {
+  if (k === 1) {
+    let visited = {};
+    let output = [];    
+    for (let i = 0; i < nums.length; i++) {
+      if (nums[i] in visited) continue; 
+      let arr = [];
+      arr.push(nums[i]);
+      output.push(arr);
+      visited[nums[i]] = nums[i];
+    }
+    return output;
+  }
+
+  let output = combine(nums, k - 1);
+  let visited = {};
+  let arr = [];
+  for (let j = 0; j < output.length; j++) {
+    let ar = output[j];
+    for (let i = nums.indexOf(ar[k-2]) + 1 + extra(ar); i < nums.length; i++) {
+      ar.push(nums[i])
+      if (!(JSON.stringify(ar) in visited)) {
+        visited[JSON.stringify(ar)] = ar;
+        arr.push([...ar]);
+      }
+      ar.pop();
+      
+    }
+  }
+  output = arr;
+
+  return output;
+};
+
+  function extra(arr) {
+    let ex = 0;
+    let i = arr.length - 1
+    while (i > 0 && arr[i] === arr[i - 1]) {
+      i--;
+      ex++;
+    }
+    return ex;
+  }
   
+  const output = [[]];
+  for (let i = 1; i <= nums.length; i++) {
+      let res = combine(nums, i);
+      output.push(...res);
+  }
+
+  return output;                       
 }
