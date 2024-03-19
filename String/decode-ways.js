@@ -39,6 +39,39 @@ Constraints:
 s contains only digits and may contain leading zero(s).
 */
 
-var numDecodings = function(s) {
-    
-};
+var numDecodings = function(s, memo = {}) {
+  const decode = {'1': 'A', '2': 'B', '3': 'C', '4': 'D', '5': 'E', '6': 'F', '7': 'G', '8': 'H', '9': 'I', '10': 'J', '11': 'K', '12': 'L', '13': 'M', '14': 'N', '15': 'O', '16': 'P', '17': 'Q', '18': 'R', '19': 'S', '20': 'T', '21': 'U', '22': 'V', '23': 'W', '24': 'X', '25': 'Y', '26': 'Z'}
+  
+  if (s.length >= 2 && s[s.length - 1] === '0' && s[s.length - 2] !== '1' && s[s.length - 2] !== '2') 
+    return 0;
+
+  if (s.length === 2) 
+    return s in decode && s[1] !== '0' ? 2 : s[0] !== '0' ? 1 : 0;
+
+  if (s.length === 1) 
+    return s[0] !== '0' ? 1 : 0;
+
+  let sum = 0;
+
+  if (s.substring(0, 1) in decode) {         
+    let key = s.substring(1);
+    if (key in memo)                     
+      sum += memo[key];
+    else {
+      sum += numDecodings(key, memo);
+      memo[key] = sum;
+    }
+  }
+
+  if (s.substring(0, 2) in decode) {
+    let key = s.substring(2);
+    if (key in memo) 
+      sum += memo[key];
+    else {
+      sum += numDecodings(key, memo);
+      memo[key] = sum;
+    } 
+  }
+
+  return sum;
+} 
