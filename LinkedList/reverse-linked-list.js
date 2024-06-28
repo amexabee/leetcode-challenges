@@ -23,5 +23,16 @@ The number of nodes in the list is the range [0, 5000].
 */
 
 var reverseList = function(head) {
+    let prev = head;
+    let curr = head ? head.next : null;
 
+    while(curr) {
+        let next = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    if (head) head.next = null;
+    return prev;
 };
