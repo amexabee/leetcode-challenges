@@ -20,5 +20,56 @@ The number of nodes in the list is n.
 */
 
 var reverseBetween = function(head, left, right) {
-    
+  let start = middle = end = null;
+  let pointer = head;
+
+  // separating
+  for (let i = 1; i < left; i++) {
+    if (!start) start = pointer;
+    else pointer = pointer.next;
+  }
+
+  middle = start ? pointer.next : head
+  if (start) pointer.next = null;
+  pointer = middle;
+
+  for (let i = left; i < right; i++) pointer = pointer.next;
+
+  end = pointer.next;
+  pointer.next = null;
+
+
+  // reversing
+  const reverse = node => {
+    let pre = node;
+    let cur = node ? node.next : null;
+    while (cur) {
+      nxt = cur.next;
+      cur.next = pre;
+      pre = cur;
+      cur = nxt;
+    }
+
+    if (node) node.next = null;
+    return pre;
+  }
+  middle = reverse(middle);
+
+
+  // joining
+  let result = start ? start : middle;
+  while(start?.next) {
+    start = start.next;
+  }
+
+  if (start) start.next = middle;
+
+  while(middle?.next) {
+    middle = middle.next;
+  }
+
+  if (middle) middle.next = end;
+
+  return result;
+
 };
