@@ -1,37 +1,25 @@
-const merge = arr => {
+const merge = (left, right) => {
+  let merged = [];
+  let i = 0, j = 0;
+
+  while (i < right.length || j < left.length) {
+    if (j >= left.length) merged.push(right[i++]);
+    else if (i >= right.length) merged.push(left[j++]);
+    else if (left[j] < right[i]) merged.push(left[j++]);
+    else merged.push(right[i++]);
+  }
+
+  return merged;
+};
+
+const divide = (arr) => {
   if (arr.length === 1) return arr;
 
-  let mid = arr.length / 2;
+  const mid = arr.length / 2;
+  let left = divide(arr.slice(0, mid));
+  let right = divide(arr.slice(mid, arr.length));
 
-  let left = merge(arr.slice(0, mid)); 
-  let right = merge(arr.slice(mid, arr.length)); 
-  
-  let p1 = 0;
-  let p2 = 0;
-  let sorted = [];
+  return merge(left, right);
+};
 
-  while (p1 < left.length || p2 < right.length) {
-    if (p1 >= left.length) { 
-      sorted.push(right[p2]); 
-      p2++;
-    }
-
-    else if (p2 >= right.length) { 
-      sorted.push(left[p1]); 
-      p1++;
-    }
-      
-    else {
-      if (left[p1] > right[p2]) {
-        sorted.push(right[p2]);
-        p2++;
-      }
-      else {
-        sorted.push(left[p1]);
-        p1++;
-      }
-    }
-  }
-  
-  return sorted;
-}
+// console.log(divide([1, 0, 3, 4, 2, 8, 7, 9, 6, 5]));
