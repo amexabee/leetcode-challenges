@@ -15,26 +15,27 @@ Output: 1
 Constraints:
 1 <= n <= 19
 
-PSEUDOCODE (RECURSIVE APPROACH)
-n = 3
-    3   
-  2
-1
-
-1
-
-1          2
-  2      1
-
-1          3          3       1         2
-  2     1           2            3    1   3
-    3     2       1            2
-
-
-
 */
 
 
 var numTrees = function(n) {
-    
+    if (n === 0) return 0; 
+    let sum = 0;
+    for (let i = 0; i < n; i++) {
+        let res;
+        if (`l${i}r${n-1-i}` in kv) 
+            res = kv[`l${i}r${n-1-i}`];
+        else if (`l${n-1-i}r${i}` in kv)
+            res = kv[`l${n-1-i}r${i}`];
+        else {
+            let right = numTrees(i, kv) || 1;
+            let left = numTrees(n - 1 - i, kv) || 1;
+            res = right * left;
+            kv[`l${i}r${n-1-i}`] = res;
+            kv[`l${n-1-i}r${i}`] = res;
+        }
+        sum += res;
+    }
+
+    return sum;
 };
