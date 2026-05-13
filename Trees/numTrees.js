@@ -19,7 +19,7 @@ Constraints:
 
 
 var numTrees = function(n, kv = {}) {
-    if (n === 0) return 0; 
+    if (n === 0) return 1; 
     let sum = 0;
     for (let i = 0; i < n; i++) {
         let res;
@@ -28,8 +28,8 @@ var numTrees = function(n, kv = {}) {
         else if (`l${n-1-i}r${i}` in kv)
             res = kv[`l${n-1-i}r${i}`];
         else {
-            let right = numTrees(i, kv) || 1;
-            let left = numTrees(n - 1 - i, kv) || 1;
+            let right = numTrees(i, kv);
+            let left = numTrees(n - 1 - i, kv);
             res = right * left;
             kv[`l${i}r${n-1-i}`] = res;
             kv[`l${n-1-i}r${i}`] = res;
