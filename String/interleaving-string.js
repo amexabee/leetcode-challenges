@@ -34,3 +34,40 @@ Constraints:
 0 <= s3.length <= 200
 s1, s2, and s3 consist of lowercase English letters.
 */
+
+/**
+ * @param {string} s1
+ * @param {string} s2
+ * @param {string} s3
+ * @return {boolean}
+ */
+var isInterleave = function(s1, s2, s3, a = 0, b = 0, kv = {}) {
+  if (s3.length !== s1.length + s2.length) return false;
+
+  if (!s1[a] && !s2[b] && !s3[a + b]) return true;
+
+  let key = a + "," + b;
+
+  if (key in kv) return kv[key];
+
+  while (true) {
+    if (s1[a] === s3[a + b] && s2[b] !== s3[a + b]) a++;
+    else if (s1[a] !== s3[a + b] && s2[b] === s3[a + b]) b++;
+    else if (s1[a] === s3[a + b] && s2[b] === s3[a + b]) {
+      if (isInterleave(s1, s2, s3, a + 1, b, kv)) {
+        kv[key] = true;
+        return true;
+      }
+      if (isInterleave(s1, s2, s3, a, b + 1, kv)) {
+        kv[key] = true;
+        return true;
+      }
+
+      kv[key] = false;
+      return false;
+    } else {
+      kv[key] = false;
+      return false;
+    }
+  }
+};
