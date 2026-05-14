@@ -18,23 +18,14 @@ Constraints:
 */
 
 
-var numTrees = function(n, kv = {}) {
-    if (n === 0) return 1; 
+var numTrees = function(n, kv = new Uint32Array(19)) {
+    if (n === 0) return 1;
     let sum = 0;
     for (let i = 0; i < n; i++) {
-        let res;
-        if (`l${i}r${n-1-i}` in kv) 
-            res = kv[`l${i}r${n-1-i}`];
-        else if (`l${n-1-i}r${i}` in kv)
-            res = kv[`l${n-1-i}r${i}`];
-        else {
-            let right = numTrees(i, kv);
-            let left = numTrees(n - 1 - i, kv);
-            res = right * left;
-            kv[`l${i}r${n-1-i}`] = res;
-            kv[`l${n-1-i}r${i}`] = res;
-        }
-        sum += res;
+        if (!kv[i]) kv[i] = numTrees(i, kv);
+        if (!kv[n-i]) kv[n-i] = numTrees(n - i - 1, kv);
+
+        sum += kv[i] * kv[n-i] 
     }
 
     return sum;
