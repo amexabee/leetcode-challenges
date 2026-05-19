@@ -21,6 +21,15 @@ The number of nodes in the tree is in the range [0, 2000].
 -1000 <= Node.val <= 1000
 */
 
-var levelOrder = function(root) {
-    
+var levelOrder = function (root) {
+  let arr = [];
+  const bfs = (root, level = 0) => {
+    if (!root) return;
+    bfs(root.left, level + 1);
+    if (!arr[level]) arr[level] = [root.val];
+    else arr[level].push(root.val);
+    bfs(root.right, level + 1);
+  };
+  bfs(root);
+  return arr;
 };
