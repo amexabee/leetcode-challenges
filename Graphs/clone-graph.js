@@ -53,5 +53,26 @@ The Graph is connected and all nodes can be visited starting from the given node
 */
 
 var cloneGraph = function(node) {
-    
+  if (!node) return node;
+
+  let visited = {}; 
+
+  const recursive = node => {
+    let neo = new _Node(node.val, []);
+    visited[node.val] = neo;
+
+    let neighbors = node.neighbors; 
+    for (let i = 0; i < neighbors.length; i++) {
+      if (!visited[neighbors[i].val]) {
+        let res = recursive(neighbors[i]);
+        visited[node.val].neighbors.push(res);
+      } else {
+        visited[node.val].neighbors.push(visited[neighbors[i].val]);
+      }
+    }
+
+    return neo;
+  }
+
+  return recursive(node);
 };
